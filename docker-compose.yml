@@ -16,10 +16,20 @@ services:
     volumes:
       - ./v1:/var/www/html
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+   # command: sh -c "composer install --ignore-platform-reqs"
     ports:
       - "8000:8000"
     depends_on:
       - php-fpm
+    networks:
+      - symfony_net
+
+  composer:
+    image: composer:2
+    volumes:
+      - ./v1:/var/www/html
+    working_dir: /var/www/html
+    command: composer install
     networks:
       - symfony_net
 
